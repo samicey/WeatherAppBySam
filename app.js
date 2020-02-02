@@ -11,7 +11,7 @@ const notificationElement = document.querySelector('.notification')
 // App data
 const weather = {};
 
-weather.tempearture ={
+weather.temperature ={
   unit:'celsius'
 }
 
@@ -58,7 +58,7 @@ function getWeather(latitude,longitude){
     return data
   })
   .then( (data)=>{
-    weather.tempearture.value= Math.floor(data.main.temp-KELVIN);
+    weather.temperature.value= Math.floor(data.main.temp-KELVIN);
     weather.description = data.weather[0].description;
     weather.iconId = data.weather[0].icon;
     weather.city = data.name;
@@ -73,7 +73,7 @@ function getWeather(latitude,longitude){
 
 function displayWeather(){
   iconElement.innerHTML= `<img src="icons/${weather.iconId}.png"/>`;
-  tempElement.innerHTML=`${weather.tempearture.value}°<span>C</span>`;
+  tempElement.innerHTML=`${weather.temperature.value}°<span>C</span>`;
   descElement.innerHTML = weather.description;
   locationElement.innerHTML=`${weather.city}, ${weather.country}`
 }
@@ -81,23 +81,24 @@ function displayWeather(){
 // C TO F CONVERSION
 
 function celsiusToFahrenheit(temperature){
-  return (tempearture * 9/5) + 32;
+  return (temperature * 9/5) + 32;
 }
 
 // WHEN THE USER CLICKS ON THE TEMPERATURE ELEMENT
 
 tempElement.addEventListener('click',function(){
-  if(weather.temperature.value===undefined) return;
-  if(weather.tempearture.unit== 'celsius'){
-    let fahrenheit = celsiusToFahrenheit(waether.tempearture.value);
+  if(weather.temperature.value===undefined) {
+    return;}
+  if(weather.temperature.unit== 'celsius'){
+    let fahrenheit = celsiusToFahrenheit(weather.temperature.value);
     fahrenheit = Math.floor(fahrenheit);
 
-    tempElement.innerHTML = `${fahrenheit}°<span>C</span>`;
+    tempElement.innerHTML = `${fahrenheit}°<span>F</span>`;
 
-    weather.tempearture.unit = 'fahrenheit';
+    weather.temperature.unit = 'fahrenheit';
   }else{
-    tempElement.innerHTML= `${weather.tempearture.value}°<span>C</span>`;
+    tempElement.innerHTML= `${weather.temperature.value}°<span>C</span>`;
 
-    weather.tempearture.unit = 'celsius';
+    weather.temperature.unit = 'celsius';
   }
 })
